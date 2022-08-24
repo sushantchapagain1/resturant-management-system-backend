@@ -27,7 +27,7 @@ model Category{
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
+  id        String      @id 
   createdAt DateTime @default(now())
   name      String
   email     String   @unique
@@ -39,7 +39,7 @@ model User {
 model Order{
   id        Int      @id @default(autoincrement())
   User      User     @relation(fields: [UserId],references: [id])
-  UserId    Int
+  UserId    String
   Product  Product @relation(fields: [ProductId],references: [id])
   ProductId Int
 }

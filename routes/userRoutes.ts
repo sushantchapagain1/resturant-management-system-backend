@@ -1,9 +1,9 @@
 import express from "express";
 import userController from "../controllers/userController";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import authController from "../controllers/authController";
 const Router = express.Router();
+
+Router.route("/signup").post(authController.signup);
 
 Router.route("/")
   .get(userController.getAllUsers)
