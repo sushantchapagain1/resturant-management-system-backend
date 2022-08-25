@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 import { v4 as uuidv4 } from "uuid";
 import dotenv from "dotenv";
 import { PrismaClient } from "@prisma/client";
-import { token } from "morgan";
+
 
 dotenv.config({ path: "./config.env" });
 const prisma = new PrismaClient();
