@@ -23,10 +23,12 @@ app.use("/api/products", productRoutes);
 app.use("/api/users", userRoutes);
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-  res.status(err.status || 500);
-  res.send({
-    status: err.status || 500,
-    message: err.message,
+  const status = err.status || 500;
+  const message = err.message || "Something went wrong!";
+  return res.status(status).json({
+    success: "fail",
+    status,
+    message,
   });
 });
 
