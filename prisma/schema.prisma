@@ -11,17 +11,17 @@ datasource db {
 }
 
 model Product {
-  id        Int      @id @default(autoincrement())
+  id        String      @id @unique
   name      String
   price     Int
   createdAt DateTime @default(now())
   Category  Category @relation(fields: [categoryId],references: [id])
-  categoryId Int
+  categoryId String
   orders  Order[]
 }
 
 model Category{
-  id        Int      @id @default(autoincrement())
+  id        String     @id @unique
   name      String  @unique
   products Product[]
 }
@@ -37,11 +37,11 @@ model User {
 }
 
 model Order{
-  id        Int      @id @default(autoincrement())
+  id        String      @id @unique
   User      User     @relation(fields: [UserId],references: [id])
   UserId    String
   Product  Product @relation(fields: [ProductId],references: [id])
-  ProductId Int
+  ProductId String
 }
 
 enum Role{

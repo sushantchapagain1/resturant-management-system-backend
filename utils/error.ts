@@ -1,7 +1,11 @@
-const createError = (message: string) => {
-  const err = new Error();
-  err.message = message;
-  return err;
-};
+export class CreateError extends Error {
+  status = 400;
 
-export default createError;
+  constructor(status: number, message: string) {
+    super(message);
+    this.status = status;
+    Object.setPrototypeOf(this, CreateError.prototype);
+  }
+}
+
+export default CreateError;

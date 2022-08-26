@@ -4,8 +4,8 @@ import bcrypt from "bcryptjs";
 import { v4 as uuidv4 } from "uuid";
 import dotenv from "dotenv";
 import { PrismaClient } from "@prisma/client";
-import createError from "../utils/error";
-dotenv.config({ path: "./config.env" });
+import CreateError from "../utils/error";
+dotenv.config();
 const prisma = new PrismaClient();
 
 const signToken = (id: string) => {
@@ -40,17 +40,19 @@ const sendCookieToken = (user: any, statusCode: number, res: Response) => {
 
 const signup = async (req: Request, res: Response, next: NextFunction) => {
   try {
+    const { id, name, email, password } = req.body;
+    if (!email || !password || !name)
+      return next(new CreateError(400, "Please provide all data"));
     const existingUser = await prisma.user.findUnique({
       where: {
         email: req.body.email,
       },
     });
-    if (existingUser) return next(createError("User already exists"));
+    if (existingUser) return next(new CreateError(400, "Email already exists"));
 
     const salt = await bcrypt.genSalt(10);
     const securedPass = await bcrypt.hash(req.body.password, salt);
     const uuid: string = uuidv4();
-    const { id, name, email, password } = req.body;
 
     const user = await prisma.user.create({
       data: {
@@ -71,17 +73,19 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { email, password } = req.body;
     if (!email || !password)
-      return next(createError("Please provide email and password"));
+      return next(new CreateError(400, "Please provide email and password"));
 
     const user = await prisma.user.findUnique({
       where: {
         email: req.body.email,
       },
     });
-    if (!user) return next(createError("User not found till production"));
+    if (!user)
+      return next(new CreateError(400, "User not found till production"));
 
     const isCorrect = await bcrypt.compare(password, user.password);
-    if (!isCorrect) return next(createError("email or password not correct"));
+    if (!isCorrect)
+      return next(new CreateError(404, "email or password donot match"));
 
     sendCookieToken(user, 200, res);
   } catch (err) {
