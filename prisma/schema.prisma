@@ -15,8 +15,9 @@ model Product {
   name      String
   price     Int
   createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
   Category  Category @relation(fields: [categoryId],references: [id])
-  categoryId String
+  categoryId String 
   orders  Order[]
 }
 
