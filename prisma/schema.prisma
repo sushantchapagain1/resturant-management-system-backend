@@ -11,11 +11,11 @@ datasource db {
 }
 
 model Product {
-  id        String      @id @unique
+  id        String   @id @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   name      String
   price     Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
   Category  Category @relation(fields: [categoryId],references: [id])
   categoryId String 
   orders  Order[]
@@ -23,6 +23,8 @@ model Product {
 
 model Category{
   id        String     @id @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   name      String  @unique
   products Product[]
 }
@@ -30,23 +32,21 @@ model Category{
 model User {
   id        String      @id 
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   name      String
   email     String   @unique
   password  String
-  Role      Role     @default(CUSTOMER)    
+  role      String   @default("CUSTOMER")    
   orders  Order[]
 }
 
 model Order{
-  id        String      @id @unique
+  id        String   @id @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   User      User     @relation(fields: [UserId],references: [id])
   UserId    String
-  Product  Product @relation(fields: [ProductId],references: [id])
+  Product  Product   @relation(fields: [ProductId],references: [id])
   ProductId String
 }
 
-enum Role{
-CUSTOMER
-MANAGER
-ADMIN
-}

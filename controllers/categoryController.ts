@@ -10,8 +10,10 @@ const createCategory = async (
   next: NextFunction
 ) => {
   try {
+    const { id } = req.body;
+    const uuid: string = uuidv4();
     const category = await prisma.category.create({
-      data: req.body,
+      data: { id: uuid, ...req.body },
     });
 
     res.status(200).json({
@@ -19,11 +21,15 @@ const createCategory = async (
       data: category,
     });
   } catch (err) {
-    console.log(err);
+    next(err);
   }
 };
 
-const getCategory = async (req: Request, res: Response, next: NextFunction) => {
+const getAllCategory = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const categories = await prisma.category.findMany({});
     res.status(200).json({
@@ -33,8 +39,18 @@ const getCategory = async (req: Request, res: Response, next: NextFunction) => {
       },
     });
   } catch (err) {
-    console.log(err);
+    next(err);
   }
 };
 
-export default { createCategory, getCategory };
+const getCategory = (req: Request, res: Response, next: NextFunction) => {};
+const updateCategory = (req: Request, res: Response, next: NextFunction) => {};
+const deleteCategory = (req: Request, res: Response, next: NextFunction) => {};
+
+export default {
+  createCategory,
+  getAllCategory,
+  getCategory,
+  updateCategory,
+  deleteCategory,
+};

@@ -1,4 +1,4 @@
-export class CreateError extends Error {
+class CreateError extends Error {
   status = 400;
 
   constructor(status: number, message: string) {
