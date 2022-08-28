@@ -32,8 +32,6 @@ const createProduct = async (
 const getProducts = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const products = await prisma.product.findMany({});
-    // if (!products)
-    // return next(new CreateError(404, "There are no any product currently"));
     res.status(200).json({
       status: "success",
       data: {
@@ -106,12 +104,18 @@ const deleteProduct = async (
 ) => {
   try {
     const { id } = req.params;
-    const product = await prisma.product.delete({
+    const productId = await prisma.category.findUnique({
       where: {
         id: id,
       },
     });
-    if (!product) return next(new CreateError(404, "Invalid Id"));
+    if (!productId) return next(new CreateError(404, "Invalid ID"));
+
+    await prisma.product.delete({
+      where: {
+        id: id,
+      },
+    });
     res.status(204).json({
       status: "success",
       data: null,
