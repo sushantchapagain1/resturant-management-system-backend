@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from "express";
-import { v4 as uuidv4 } from "uuid";
 import CreateError from "../utils/error";
 
 import { PrismaClient } from "@prisma/client";
@@ -11,11 +10,7 @@ const createCategory = async (
   next: NextFunction
 ) => {
   try {
-    const { id } = req.body;
-    const uuid: string = uuidv4();
-    const category = await prisma.category.create({
-      data: { id: uuid, ...req.body },
-    });
+    const category = await prisma.category.create({ data: req.body });
 
     res.status(200).json({
       status: "success",

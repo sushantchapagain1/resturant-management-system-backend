@@ -1,7 +1,5 @@
 import { NextFunction, Request, Response } from "express";
 import CreateError from "../utils/error";
-import { v4 as uuidv4 } from "uuid";
-
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -12,17 +10,13 @@ const createProduct = async (
   next: NextFunction
 ) => {
   try {
-    const { id } = req.body;
-    const uuid: string = uuidv4();
-
     const product = await prisma.product.create({
-      data: { id: uuid, ...req.body },
+      data: req.body,
     });
+
     res.status(200).json({
       status: "success",
-      data: {
-        product,
-      },
+      data: product,
     });
   } catch (err) {
     next(err);
@@ -104,7 +98,7 @@ const deleteProduct = async (
 ) => {
   try {
     const { id } = req.params;
-    const productId = await prisma.category.findUnique({
+    const productId = await prisma.product.findUnique({
       where: {
         id: id,
       },

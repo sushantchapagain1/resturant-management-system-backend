@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from "express";
 import CreateError from "../utils/error";
-import { v4 as uuidv4 } from "uuid";
 
 import { PrismaClient } from "@prisma/client";
 
@@ -8,17 +7,11 @@ const prisma = new PrismaClient();
 
 const createOrder = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { id } = req.body;
-    const uuid: string = uuidv4();
+    const order = await prisma.order.create({ data: req.body });
 
-    const order = await prisma.order.create({
-      data: { id: uuid, ...req.body },
-    });
     res.status(200).json({
       status: "success",
-      data: {
-        order,
-      },
+      data: order,
     });
   } catch (err) {
     next(err);
@@ -28,8 +21,6 @@ const createOrder = async (req: Request, res: Response, next: NextFunction) => {
 const getOrders = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const orders = await prisma.order.findMany({});
-    if (!orders)
-      return next(new CreateError(404, "There are no any order currently"));
     res.status(200).json({
       status: "success",
       data: {

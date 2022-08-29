@@ -11,7 +11,7 @@ datasource db {
 }
 
 model Product {
-  id        String   @id @unique
+  id        String   @id @unique @default(uuid()) 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   name      String
@@ -22,7 +22,7 @@ model Product {
 }
 
 model Category{
-  id        String     @id @unique
+  id        String     @id @unique @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   name      String  @unique
@@ -30,18 +30,18 @@ model Category{
 }
 
 model User {
-  id        String      @id 
+  id        String    @id @unique  @default(uuid()) 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   name      String
   email     String   @unique
   password  String
-  role      String   @default("CUSTOMER")    
+  role      Role  @default(Customer)     
   orders  Order[]
 }
 
 model Order{
-  id        String   @id @unique
+  id        String   @id @unique @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   User      User     @relation(fields: [UserId],references: [id])
@@ -50,3 +50,8 @@ model Order{
   ProductId String
 }
 
+enum Role{
+  Admin
+  Customer
+  Manager
+}

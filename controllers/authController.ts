@@ -1,12 +1,13 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import { v4 as uuidv4 } from "uuid";
 import dotenv from "dotenv";
-import { PrismaClient } from "@prisma/client";
 import CreateError from "../utils/error";
-dotenv.config();
+
+import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
+
+dotenv.config();
 
 const signToken = (id: string) => {
   return jwt.sign({ id }, `${process.env.JWT_SECRET}`, {
@@ -16,11 +17,11 @@ const signToken = (id: string) => {
 
 const sendCookieToken = (user: any, statusCode: number, res: Response) => {
   const token = signToken(user.id);
-
+  const convertToMiliSecond = 24 * 60 * 60 * 1000;
   const cookieOptions = {
     expires: new Date(
       Date.now() +
-        Number(process.env.JWT_COOKIE_EXPIRY_TIME) * 24 * 60 * 60 * 1000 //converting to miliseconds
+        Number(process.env.JWT_COOKIE_EXPIRY_TIME) * convertToMiliSecond
     ),
     // TODO
     // secure: true, //works only on encrpted connections https
@@ -40,7 +41,7 @@ const sendCookieToken = (user: any, statusCode: number, res: Response) => {
 
 const signup = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { id, name, email, password } = req.body;
+    const { name, email, password } = req.body;
     if (!email || !password || !name)
       return next(new CreateError(400, "Please provide all data"));
     const existingUser = await prisma.user.findUnique({
@@ -52,11 +53,9 @@ const signup = async (req: Request, res: Response, next: NextFunction) => {
 
     const salt = await bcrypt.genSalt(10);
     const securedPass = await bcrypt.hash(req.body.password, salt);
-    const uuid: string = uuidv4();
 
     const user = await prisma.user.create({
       data: {
-        id: uuid,
         name,
         email,
         password: securedPass,
