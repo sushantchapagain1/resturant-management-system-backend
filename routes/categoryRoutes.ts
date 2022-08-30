@@ -11,6 +11,10 @@ Router.route("/")
 Router.route("/:id")
   .get(categoryController.getCategory)
   .patch(categoryController.updateCategory)
-  .delete(categoryController.deleteCategory);
+  .delete(
+    authController.protect,
+    authController.allowTo("Admin"),
+    categoryController.deleteCategory
+  );
 
 export default Router;
