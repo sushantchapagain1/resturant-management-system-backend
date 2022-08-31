@@ -1,9 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import CreateError from "../utils/error";
 
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { prisma } from "../db";
 
 const createOrder = async (req: Request, res: Response, next: NextFunction) => {
   try {

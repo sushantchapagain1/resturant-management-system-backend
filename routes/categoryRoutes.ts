@@ -1,19 +1,27 @@
 import express from "express";
 import categoryController from "../controllers/categoryController";
-import authController from "../controllers/authController";
+import authMiddleware from "../middleware/authMiddleware";
 
 const Router = express.Router();
 
 Router.route("/")
-  .get(authController.protect, categoryController.getAllCategory)
-  .post(categoryController.createCategory);
+  .get(authMiddleware.protect, categoryController.getAllCategory)
+  .post(
+    authMiddleware.protect,
+    authMiddleware.allowTo("Admin"),
+    categoryController.createCategory
+  );
 
 Router.route("/:id")
   .get(categoryController.getCategory)
-  .patch(categoryController.updateCategory)
+  .patch(
+    authMiddleware.protect,
+    authMiddleware.allowTo("Admin"),
+    categoryController.updateCategory
+  )
   .delete(
-    authController.protect,
-    authController.allowTo("Admin"),
+    authMiddleware.protect,
+    authMiddleware.allowTo("Admin"),
     categoryController.deleteCategory
   );
 

@@ -1,8 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import CreateError from "../utils/error";
-
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
+import { prisma } from "../db";
 
 const createCategory = async (
   req: Request,
