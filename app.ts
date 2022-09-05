@@ -6,10 +6,12 @@ import orderRoutes from "./routes/orderRoutes";
 import productRoutes from "./routes/productRoutes";
 import categoryRoutes from "./routes/categoryRoutes";
 import globalErrorHandler from "./middleware/globalErrHandlerMiddleware";
+import cookieParser from "cookie-parser";
 dotenv.config();
 
 const app = express();
 app.use(express.json());
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan("dev"));
 
