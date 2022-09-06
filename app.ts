@@ -14,9 +14,9 @@ import swaggerDocument from "./swagger.json";
 dotenv.config();
 
 const app = express();
+app.use(cookieParser());
 app.use(cors());
 app.use(express.json());
-app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan("dev"));
 
@@ -24,11 +24,6 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.get("/", async (req: Request, res: Response, next: NextFunction) => {
   res.send({ message: "Awesome it works 🐻" });
-});
-
-app.use((req, res, next) => {
-  console.log(req.cookies);
-  next();
 });
 
 app.use("/api/category", categoryRoutes);
