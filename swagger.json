@@ -1,0 +1,179 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Resturant_management_system",
+    "description": "resturant_management_system API",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": ["http"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/api/users": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Get all users in system",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/api/signp": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Register as a user to the system",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
+    },
+    "/api/users/{id}": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Register as a user to the system",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
+    },
+
+    "definitions": {
+      "User": {
+        "required": ["name", "email", "password"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "uniqueItems": true,
+            "default": "uuid()"
+          },
+          "createdAt": {
+            "type": "DateTime",
+            "default": "now()"
+          },
+          "updatedAt": {
+            "type": "DateTime",
+            "default": "updatedAt"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "uniqueItems": "true"
+          },
+          "password": {
+            "type": "string"
+          },
+          "role": {
+            "type": "Role",
+            "default": "Customer"
+          },
+          "orders": {
+            "type": "Order[]"
+          }
+        }
+      },
+      "Order": {
+        "required": ["UserId", "ProductId"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "uniqueItems": true,
+            "default": "uuid()"
+          },
+          "createdAt": {
+            "type": "DateTime",
+            "default": "now()"
+          },
+          "updatedAt": {
+            "type": "DateTime",
+            "default": "updatedAt"
+          },
+          "UserId": {
+            "type": "string"
+          },
+          "ProductId": {
+            "type": "string"
+          }
+        }
+      },
+      "Product": {
+        "required": ["name", "price", "categoryId"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "uniqueItems": true,
+            "default": "uuid()"
+          },
+          "createdAt": {
+            "type": "DateTime",
+            "default": "now()"
+          },
+          "updatedAt": {
+            "type": "DateTime",
+            "default": "updatedAt"
+          },
+          "name": {
+            "type": "string"
+          },
+          "price": {
+            "type": "Int"
+          },
+          "categoryId": {
+            "type": "string"
+          },
+          "orders": { "type": "Order[]" }
+        }
+      },
+      "Category": {
+        "required": ["name"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "uniqueItems": true,
+            "default": "uuid()"
+          },
+          "createdAt": {
+            "type": "DateTime",
+            "default": "now()"
+          },
+          "updatedAt": {
+            "type": "DateTime",
+            "default": "updatedAt"
+          },
+          "name": {
+            "type": "string",
+            "uniqueItems": true
+          },
+          "products": {
+            "type": "Product[]"
+          }
+        }
+      }
+    }
+  }
+}
