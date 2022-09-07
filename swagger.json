@@ -32,13 +32,13 @@
         }
       }
     },
-    "/api/signp": {
+    "/api/users/signup": {
       "post": {
         "tags": ["User"],
         "summary": "Register as a user to the system",
         "responses": {
-          "200": {
-            "description": "OK",
+          "201": {
+            "description": "Created",
             "schema": {
               "$ref": "#/definitions/User"
             }
@@ -49,7 +49,7 @@
     "/api/users/{id}": {
       "get": {
         "tags": ["User"],
-        "summary": "Register as a user to the system",
+        "summary": "Get specific user to the system by id",
         "responses": {
           "200": {
             "description": "OK",
@@ -58,9 +58,224 @@
             }
           }
         }
+      },
+      "patch": {
+        "tags": ["User"],
+        "summary": "Update specific user to the system by id",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["User"],
+        "summary": "Delete specific user to the system by id",
+        "responses": {
+          "204": {
+            "description": "No content",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
       }
     },
-
+    "/api/category": {
+      "get": {
+        "tags": ["Category"],
+        "summary": "Get all category",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Category"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Category"],
+        "summary": "Post a category",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/Category"
+            }
+          }
+        }
+      }
+    },
+    "/api/category/{id}": {
+      "get": {
+        "tags": ["Category"],
+        "summary": "Get one category",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Category"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Category"],
+        "summary": "Edit category by ID",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/Category"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Category"],
+        "summary": "Delete category by ID",
+        "responses": {
+          "204": {
+            "description": "204 no content",
+            "schema": {
+              "$ref": "#/definitions/Category"
+            }
+          }
+        }
+      }
+    },
+    "/api/products": {
+      "get": {
+        "tags": ["Product"],
+        "summary": "Get all product",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Category"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Product"],
+        "summary": "Post a product",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          }
+        }
+      }
+    },
+    "/api/products/{id}": {
+      "get": {
+        "tags": ["Product"],
+        "summary": "Get one product",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Product"],
+        "summary": "Edit product by ID",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Product"],
+        "summary": "Delete product by ID",
+        "responses": {
+          "204": {
+            "description": "204 no content",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          }
+        }
+      }
+    },
+    "/api/orders": {
+      "get": {
+        "tags": ["Order"],
+        "summary": "Get all order",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Category"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Order"],
+        "summary": "Post a order",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/Order"
+            }
+          }
+        }
+      }
+    },
+    "/api/orders/{id}": {
+      "get": {
+        "tags": ["Order"],
+        "summary": "Get one order",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Order"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Order"],
+        "summary": "Edit order by ID",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/Order"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Order"],
+        "summary": "Delete order by ID",
+        "responses": {
+          "204": {
+            "description": "204 no content",
+            "schema": {
+              "$ref": "#/definitions/Order"
+            }
+          }
+        }
+      }
+    },
     "definitions": {
       "User": {
         "required": ["name", "email", "password"],

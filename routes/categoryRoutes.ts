@@ -5,7 +5,7 @@ import authMiddleware from "../middleware/authMiddleware";
 const Router = express.Router();
 
 Router.route("/")
-  .get(authMiddleware.protect, categoryController.getAllCategory)
+  .get(categoryController.getAllCategory)
   .post(
     authMiddleware.protect,
     authMiddleware.allowTo("Admin"),
@@ -13,7 +13,7 @@ Router.route("/")
   );
 
 Router.route("/:id")
-  .get(categoryController.getCategory)
+  .get(authMiddleware.protect, categoryController.getCategory)
   .patch(
     authMiddleware.protect,
     authMiddleware.allowTo("Admin"),
