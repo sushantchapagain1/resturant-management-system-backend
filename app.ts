@@ -15,7 +15,17 @@ dotenv.config();
 
 const app = express();
 app.use(cookieParser());
-app.use(cors({ origin: "*", exposedHeaders: "*" }));
+app.use(
+  cors({
+    origin: (origin, cb) => {
+      const ORIGINS =
+        process.env.NODE_ENV !== "production" ? [origin ?? /localhost.*/] : [];
+      cb(null, [...ORIGINS, process.env.FRONTEND_URI ?? ""]);
+      console.log(ORIGINS);
+    },
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan("dev"));
