@@ -14,10 +14,16 @@ const signToken = (id: string) => {
   });
 };
 
+type cookieOptionsType = {
+  expires: Date;
+  httpOnly: boolean;
+  secure?: boolean;
+};
+
 const sendCookieToken = (user: any, statusCode: number, res: Response) => {
   const token = signToken(user.id);
   const convertToMiliSecond = 24 * 60 * 60 * 1000;
-  const cookieOptions = {
+  const cookieOptions: cookieOptionsType = {
     expires: new Date(
       Date.now() +
         Number(process.env.JWT_COOKIE_EXPIRY_TIME) * convertToMiliSecond
@@ -26,6 +32,7 @@ const sendCookieToken = (user: any, statusCode: number, res: Response) => {
     // secure: true, //works only on encrpted connections https
     httpOnly: true,
   };
+  if (process.env.NODE_ENV === "production") cookieOptions.secure = true;
 
   res.cookie("jwt_cookie", token, cookieOptions);
 
