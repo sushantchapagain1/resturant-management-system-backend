@@ -22,7 +22,10 @@ const protect = async (
       req.headers.authorization.startsWith("Bearer")
     ) {
       token = req.headers.authorization.split(" ")[1];
+    } else if (req.cookies.jwt_cookie) {
+      token = req.cookies.jwt_cookie;
     }
+
     if (!token) return next(new CreateError(401, "You are not logged in!"));
 
     // verify token if token is manupulated or expired.

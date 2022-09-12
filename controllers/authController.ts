@@ -9,7 +9,7 @@ import { prisma } from "../db";
 dotenv.config();
 
 const signToken = (id: string) => {
-  return jwt.sign({ id }, `${process.env.JWT_SECRET}`, {
+  return jwt.sign({ id }, process.env.JWT_SECRET as string, {
     expiresIn: process.env.JWT_EXPIRY_TIME,
   });
 };
@@ -86,7 +86,7 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
       },
     });
     if (!user)
-      return next(new CreateError(400, "User not found till production"));
+      return next(new CreateError(400, "email or password donot match"));
 
     const isCorrect = await bcrypt.compare(password, user.password);
     if (!isCorrect)
@@ -98,4 +98,17 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export default { signup, login };
+const logout = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const expireTime = new Date(Date.now() + 5 * 1000);
+    res.cookie("jwt_cookie", "loggedout", {
+      expires: expireTime,
+      httpOnly: true,
+    });
+    return res.status(200).json({ status: "success" });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export default { signup, login, logout };

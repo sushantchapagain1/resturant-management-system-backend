@@ -8,7 +8,10 @@ const createCategory = async (
   next: NextFunction
 ) => {
   try {
-    const category = await prisma.category.create({ data: req.body });
+    const { name } = req.body;
+    const category = await prisma.category.create({ data: { name } });
+    if (!name)
+      return next(new CreateError(400, "Please provide name of the category"));
 
     res.status(200).json({
       status: "success",
