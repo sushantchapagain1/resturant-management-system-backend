@@ -1,0 +1,394 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Resturant_management_system",
+    "description": "resturant_management_system API",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": ["http"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/api/users": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Get all users in system",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/api/users/signup": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Register as a user to the system",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
+    },
+    "/api/users/{id}": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Get specific user to the system by id",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["User"],
+        "summary": "Update specific user to the system by id",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["User"],
+        "summary": "Delete specific user to the system by id",
+        "responses": {
+          "204": {
+            "description": "No content",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
+    },
+    "/api/category": {
+      "get": {
+        "tags": ["Category"],
+        "summary": "Get all category",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Category"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Category"],
+        "summary": "Post a category",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/Category"
+            }
+          }
+        }
+      }
+    },
+    "/api/category/{id}": {
+      "get": {
+        "tags": ["Category"],
+        "summary": "Get one category",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Category"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Category"],
+        "summary": "Edit category by ID",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/Category"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Category"],
+        "summary": "Delete category by ID",
+        "responses": {
+          "204": {
+            "description": "204 no content",
+            "schema": {
+              "$ref": "#/definitions/Category"
+            }
+          }
+        }
+      }
+    },
+    "/api/products": {
+      "get": {
+        "tags": ["Product"],
+        "summary": "Get all product",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Category"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Product"],
+        "summary": "Post a product",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          }
+        }
+      }
+    },
+    "/api/products/{id}": {
+      "get": {
+        "tags": ["Product"],
+        "summary": "Get one product",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Product"],
+        "summary": "Edit product by ID",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Product"],
+        "summary": "Delete product by ID",
+        "responses": {
+          "204": {
+            "description": "204 no content",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          }
+        }
+      }
+    },
+    "/api/orders": {
+      "get": {
+        "tags": ["Order"],
+        "summary": "Get all order",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Category"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Order"],
+        "summary": "Post a order",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/Order"
+            }
+          }
+        }
+      }
+    },
+    "/api/orders/{id}": {
+      "get": {
+        "tags": ["Order"],
+        "summary": "Get one order",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Order"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Order"],
+        "summary": "Edit order by ID",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/Order"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Order"],
+        "summary": "Delete order by ID",
+        "responses": {
+          "204": {
+            "description": "204 no content",
+            "schema": {
+              "$ref": "#/definitions/Order"
+            }
+          }
+        }
+      }
+    },
+    "definitions": {
+      "User": {
+        "required": ["name", "email", "password"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "uniqueItems": true,
+            "default": "uuid()"
+          },
+          "createdAt": {
+            "type": "DateTime",
+            "default": "now()"
+          },
+          "updatedAt": {
+            "type": "DateTime",
+            "default": "updatedAt"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "uniqueItems": "true"
+          },
+          "password": {
+            "type": "string"
+          },
+          "role": {
+            "type": "Role",
+            "default": "Customer"
+          },
+          "orders": {
+            "type": "Order[]"
+          }
+        }
+      },
+      "Order": {
+        "required": ["UserId", "ProductId"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "uniqueItems": true,
+            "default": "uuid()"
+          },
+          "createdAt": {
+            "type": "DateTime",
+            "default": "now()"
+          },
+          "updatedAt": {
+            "type": "DateTime",
+            "default": "updatedAt"
+          },
+          "UserId": {
+            "type": "string"
+          },
+          "ProductId": {
+            "type": "string"
+          }
+        }
+      },
+      "Product": {
+        "required": ["name", "price", "categoryId"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "uniqueItems": true,
+            "default": "uuid()"
+          },
+          "createdAt": {
+            "type": "DateTime",
+            "default": "now()"
+          },
+          "updatedAt": {
+            "type": "DateTime",
+            "default": "updatedAt"
+          },
+          "name": {
+            "type": "string"
+          },
+          "price": {
+            "type": "Int"
+          },
+          "categoryId": {
+            "type": "string"
+          },
+          "orders": { "type": "Order[]" }
+        }
+      },
+      "Category": {
+        "required": ["name"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "uniqueItems": true,
+            "default": "uuid()"
+          },
+          "createdAt": {
+            "type": "DateTime",
+            "default": "now()"
+          },
+          "updatedAt": {
+            "type": "DateTime",
+            "default": "updatedAt"
+          },
+          "name": {
+            "type": "string",
+            "uniqueItems": true
+          },
+          "products": {
+            "type": "Product[]"
+          }
+        }
+      }
+    }
+  }
+}
