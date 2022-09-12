@@ -91,4 +91,17 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export default { signup, login };
+const logout = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const expireTime = new Date(Date.now() + 5 * 1000);
+    res.cookie("jwt_cookie", "loggedout", {
+      expires: expireTime,
+      httpOnly: true,
+    });
+    return res.status(200).json({ status: "success" });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export default { signup, login, logout };
