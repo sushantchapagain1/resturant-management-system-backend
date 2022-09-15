@@ -9,9 +9,20 @@ const createCategory = async (
 ) => {
   try {
     const { name } = req.body;
-    const category = await prisma.category.create({ data: { name } });
+
     if (!name)
       return next(new CreateError(400, "Please provide name of the category"));
+
+    const existingCategory = await prisma.category.findUnique({
+      where: {
+        name: req.body.name,
+      },
+    });
+
+    if (existingCategory)
+      return next(new CreateError(400, "Category already exists"));
+
+    const category = await prisma.category.create({ data: { name } });
 
     res.status(200).json({
       status: "success",
@@ -73,6 +84,17 @@ const updateCategory = async (
       },
     });
     if (!categoryId) return next(new CreateError(404, "Invalid ID"));
+
+    const existingCategory = await prisma.category.findUnique({
+      where: {
+        name: req.body.name,
+      },
+    });
+
+    if (existingCategory)
+      return next(
+        new CreateError(400, "You have not still changed the category ")
+      );
 
     const category = await prisma.category.update({
       where: {

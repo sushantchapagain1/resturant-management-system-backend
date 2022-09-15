@@ -3,14 +3,24 @@ import CreateError from "../utils/error";
 
 import { prisma } from "../db";
 
+type productData = {
+  name: string;
+  price: number;
+  categoryId: string;
+};
+
 const createProduct = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
+    const { name, price, categoryId } = req.body;
+    if (!name || !price || !categoryId)
+      return next(new CreateError(400, "Please provide all data"));
+
     const product = await prisma.product.create({
-      data: req.body,
+      data: { name, price, categoryId } as productData,
     });
 
     res.status(200).json({
