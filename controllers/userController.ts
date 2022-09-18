@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import CreateError from "../utils/error";
 import { prisma } from "../db";
-import { Role } from "@prisma/client";
 
 const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
   try {

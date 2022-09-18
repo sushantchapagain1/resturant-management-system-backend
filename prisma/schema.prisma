@@ -16,7 +16,7 @@ model Product {
   updatedAt DateTime @updatedAt
   name      String
   price     Int
-  Category  Category @relation(fields: [categoryId],references: [id])
+  Category  Category @relation(fields: [categoryId],references: [id],onDelete: Cascade)
   categoryId String 
   orders  Order[]
 }
@@ -36,7 +36,7 @@ model User {
   name      String
   email     String   @unique
   password  String
-  role      Role  @default(Customer)     
+  role      String  @default("Customer")     
   orders  Order[]
 }
 
@@ -44,14 +44,9 @@ model Order{
   id        String   @id @unique @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  User      User     @relation(fields: [UserId],references: [id])
+  User      User     @relation(fields: [UserId],references: [id],onDelete: Cascade)
   UserId    String
-  Product  Product   @relation(fields: [ProductId],references: [id])
+  Product  Product   @relation(fields: [ProductId],references: [id],onDelete: Cascade)
   ProductId String
 }
 
-enum Role{
-  Admin
-  Customer
-  Manager
-}

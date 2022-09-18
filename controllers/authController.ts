@@ -20,7 +20,13 @@ type cookieOptionsType = {
   secure?: boolean;
 };
 
-const sendCookieToken = (user: any, statusCode: number, res: Response) => {
+const sendCookieToken = (
+  user: any,
+  statusCode: number,
+  res: Response,
+  req: Request
+) => {
+const sendCookieToken = (user: any, statusCode: number, res: Response,req:Request) => {
   const token = signToken(user.id);
   const convertToMiliSecond = 24 * 60 * 60 * 1000;
   const cookieOptions: cookieOptionsType = {
@@ -28,10 +34,11 @@ const sendCookieToken = (user: any, statusCode: number, res: Response) => {
       Date.now() +
         Number(process.env.JWT_COOKIE_EXPIRY_TIME) * convertToMiliSecond
     ),
-    // TODO
-    // secure: true, //works only on encrpted connections https
     httpOnly: true,
+    //works only on encrpted connections https
   };
+  // if (process.env.NODE_ENV === "production") cookieOptions.secure = true;
+  // secure: req.secure || req.headers("x-forwarded-proto") === "https",
   if (process.env.NODE_ENV === "production") cookieOptions.secure = true;
 
   res.cookie("jwt_cookie", token, cookieOptions);
@@ -68,7 +75,7 @@ const signup = async (req: Request, res: Response, next: NextFunction) => {
       },
     });
 
-    sendCookieToken(user, 200, res);
+    sendCookieToken(user, 200, res, req);
   } catch (err) {
     next(err);
   }
@@ -92,7 +99,7 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
     if (!isCorrect)
       return next(new CreateError(404, "email or password donot match"));
 
-    sendCookieToken(user, 200, res);
+    sendCookieToken(user, 200, res, req);
   } catch (err) {
     next(err);
   }
@@ -111,4 +118,4 @@ const logout = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export default { signup, login, logout };
+export default {signup,login,logout};
