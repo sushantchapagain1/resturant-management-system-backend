@@ -26,6 +26,7 @@ const sendCookieToken = (
   res: Response,
   req: Request
 ) => {
+const sendCookieToken = (user: any, statusCode: number, res: Response,req:Request) => {
   const token = signToken(user.id);
   const convertToMiliSecond = 24 * 60 * 60 * 1000;
   const cookieOptions: cookieOptionsType = {
@@ -38,6 +39,8 @@ const sendCookieToken = (
   };
   // if (process.env.NODE_ENV === "production") cookieOptions.secure = true;
   // secure: req.secure || req.headers("x-forwarded-proto") === "https",
+  if (process.env.NODE_ENV === "production") cookieOptions.secure = true;
+
   res.cookie("jwt_cookie", token, cookieOptions);
 
   res.status(statusCode).json({
@@ -115,4 +118,4 @@ const logout = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export default { signup, login, logout };
+export default {signup,login,logout};
